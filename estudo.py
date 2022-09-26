@@ -42,9 +42,18 @@ pygame.draw.rect( # Marca branca direita
 #   ATUALIZANDO A JANELA
 pygame.display.update()
 
+#   CARREGANDO IMAGENS JOGADOR
+jogador = pygame.image.load("jogador.png")
+jogador_loc = jogador.get_rect()
+jogador_loc.center = width/2 + road_w/4, height*0.8
+
 while janela_aberta:
     for event in pygame.event.get():
         if event.type == QUIT:
             janela_aberta = False
+
+    janela.blit(jogador, jogador_loc)
+    pygame.display.update()
+
 
 pygame.quit()
