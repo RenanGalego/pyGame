@@ -9,6 +9,7 @@ roadMark_w = int(width/80)
 #   DIREÇÕES
 faixa_direita = width/2 + road_w/4
 faixa_esquerda = width/2 - road_w/4
+speed = 1
 
 
 pygame.init()
@@ -33,18 +34,25 @@ jogador_loc.center = faixa_direita, height*0.8
 #   CARREGANDO IMAGENS INIMIGO
 inimigo = pygame.image.load("inimigo.png")
 inimigo_loc = inimigo.get_rect()
-inimigo_loc.center = faixa_esquerda, height*0.2
+inimigo_loc.center = faixa_esquerda, height*0.8
+
+counter = 0
 
 while janela_aberta:
+    counter += 1
+    if counter == 5000:
+        speed+=0.25
+        counter = 0
+        print("level-up", speed)
     #   ANIMAÇÃO INIMIGO
-    inimigo_loc[1] += 1
+    inimigo_loc[1] += speed
     if inimigo_loc[1] > height:
         if random.randint(0,1) == 0:
             inimigo_loc.center = faixa_direita, -200
         else:
             inimigo_loc.center = faixa_esquerda, -200
     #   FIM DE JOGO
-    if jogador_loc[0] == inimigo_loc[0] and inimigo_loc[1] > jogador_loc[1] -250:
+    if jogador_loc[0] == inimigo_loc[0] and inimigo_loc[1] > jogador_loc[1] - 250:
         print("Game Over! Você perdeu!")
         break
 
@@ -64,17 +72,14 @@ while janela_aberta:
                 janela,
                 (50,50,50),
                 (width/2-road_w/2, 0, road_w, height))
-
     pygame.draw.rect( # Marca amarela
                     janela,
                     (255, 240, 60),
                     (width/2 - roadMark_w/2, 0, roadMark_w, height))
-
     pygame.draw.rect( # Marca branca esquerda
                     janela,
                     (255, 255, 255),
                     (width/2 - road_w/2 + roadMark_w*2, 0, roadMark_w, height))
-
     pygame.draw.rect( # Marca branca direita
                     janela,
                     (255, 255, 255),
